@@ -41,7 +41,10 @@ jobs:
     steps:
       - checkout
 
-      - run: bash scripts/generate.sh > Dockerfile
+      - run:
+	  	  command: |
+		    bash scripts/generate.sh > Dockerfile
+			echo "RUN apt-get install -y mono-complete" >> Dockerfile
 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
