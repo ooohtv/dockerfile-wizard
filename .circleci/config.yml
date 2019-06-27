@@ -42,6 +42,7 @@ jobs:
       - checkout
 
       - run:
+          name: generate dockerfile
           command: |
             bash scripts/generate.sh > Dockerfile
             echo "RUN apt-get install -y mono-complete" >> Dockerfile
