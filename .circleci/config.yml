@@ -45,7 +45,7 @@ jobs:
           name: generate dockerfile
           command: |
             bash scripts/generate.sh > Dockerfile
-            echo "RUN apt-get install -y mono-complete" >> Dockerfile
+            echo "RUN apt-get install -y mono-complete jq" >> Dockerfile
 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
