@@ -6,7 +6,7 @@ image_config: &image_config
 
   IMAGE_NAME: swagger-csharp
 
-  IMAGE_TAG: 1.0.0
+  IMAGE_TAG: 1.0.1
 
   # NOTE: if you're modifying this config.yml file manually
   # rather than using the included setup script,
@@ -45,7 +45,7 @@ jobs:
           name: generate dockerfile
           command: |
             bash scripts/generate.sh > Dockerfile
-            echo "RUN apt-get install -y mono-complete" >> Dockerfile
+            echo "RUN apt-get install -y mono-complete jq" >> Dockerfile
 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
@@ -58,7 +58,7 @@ jobs:
 
   test_image:
     docker:
-      - image: $DOCKER_USERNAME/swagger-csharp:1.0.0
+      - image: $DOCKER_USERNAME/swagger-csharp:1.0.1
         environment:
           <<: *image_config
 
