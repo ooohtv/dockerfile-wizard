@@ -6,7 +6,7 @@ image_config: &image_config
 
   IMAGE_NAME: swagger-csharp
 
-  IMAGE_TAG: 1.0.1
+  IMAGE_TAG: 1.0.2
 
   # NOTE: if you're modifying this config.yml file manually
   # rather than using the included setup script,
@@ -45,6 +45,10 @@ jobs:
           name: generate dockerfile
           command: |
             bash scripts/generate.sh > Dockerfile
+            echo "RUN apt install -y apt-transport-https dirmngr gnupg ca-certificates" >> Dockerfile
+            echo "RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF" >> Dockerfile
+            echo "RUN echo 'deb https://download.mono-project.com/repo/debian stable-stretch main' | tee /etc/apt/sources.list.d/mono-official-stable.list" >> Dockerfile
+            echo "RUN apt update" >> Dockerfile
             echo "RUN apt-get install -y mono-complete jq" >> Dockerfile
 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -58,7 +62,7 @@ jobs:
 
   test_image:
     docker:
-      - image: $DOCKER_USERNAME/swagger-csharp:1.0.1
+      - image: $DOCKER_USERNAME/swagger-csharp:1.0.2
         environment:
           <<: *image_config
 
