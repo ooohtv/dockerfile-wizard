@@ -6,7 +6,7 @@ image_config: &image_config
 
   IMAGE_NAME: swagger-csharp
 
-  IMAGE_TAG: 1.0.2
+  IMAGE_TAG: 1.0.3
 
   # NOTE: if you're modifying this config.yml file manually
   # rather than using the included setup script,
@@ -50,6 +50,9 @@ jobs:
             echo "RUN echo 'deb https://download.mono-project.com/repo/debian stable-stretch main' | tee /etc/apt/sources.list.d/mono-official-stable.list" >> Dockerfile
             echo "RUN apt update" >> Dockerfile
             echo "RUN apt-get install -y mono-complete jq" >> Dockerfile
+            echo "RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash" >> Dockerfile
+            echo "RUN apt-get install -y git-lfs" >> Dockerfile
+            echo "RUN git lfs install" >> Dockerfile
 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
@@ -62,7 +65,7 @@ jobs:
 
   test_image:
     docker:
-      - image: $DOCKER_USERNAME/swagger-csharp:1.0.2
+      - image: $DOCKER_USERNAME/swagger-csharp:1.0.3
         environment:
           <<: *image_config
 
