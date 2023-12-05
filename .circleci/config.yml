@@ -6,7 +6,7 @@ image_config: &image_config
 
   IMAGE_NAME: swagger-csharp
 
-  IMAGE_TAG: 1.0.3
+  IMAGE_TAG: 1.0.4
 
   # NOTE: if you're modifying this config.yml file manually
   # rather than using the included setup script,
@@ -65,7 +65,7 @@ jobs:
 
   test_image:
     docker:
-      - image: $DOCKER_USERNAME/swagger-csharp:1.0.3
+      - image: $DOCKER_USERNAME/swagger-csharp:1.0.4
         environment:
           <<: *image_config
 
